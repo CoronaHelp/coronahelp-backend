@@ -42,7 +42,7 @@ router.delete("/:id", async (req, res) => {
   const user = await User.getUserById(id);
 
   if (user) {
-    User.remove(id)
+    return User.remove(id)
       .then(rmvd => {
         res.status(200).json({ delete: "success", user });
       })
