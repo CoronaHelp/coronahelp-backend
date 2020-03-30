@@ -103,4 +103,4 @@ dist
 # TernJS port file
 .tern-port
 
-data/*.db3
+*.db3
