@@ -1,9 +1,13 @@
+const invCatRoute = require("./invCategoryRoute");
+const invItemsRoute = require("./invItemsRoute");
 const locationRoute = require("./locationRoute");
+const locationInvRoute = require("./locationInvRoute");
 const userRoute = require("./userRoute");
-const invCatRoute = require("./invCategoryRoute")
 
 module.exports = {
-	locationRoute,
-	userRoute,
 	invCatRoute,
+	invItemsRoute,
+	locationRoute,
+	locationInvRoute,
+	userRoute,
 };
