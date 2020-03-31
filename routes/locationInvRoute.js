@@ -18,4 +18,10 @@ router.get("/items/:id", async (req, res) => {
   }
 });
 
+router.post("/", (req, res) => {
+  return LocationInv.create(req.body)
+    .then(insrtd => res.status(201).json(insrtd))
+    .catch(err => res.status(500).json({ errorMessage: `Error adding item to location: ${ err }` }));
+});
+
 module.exports = router;
