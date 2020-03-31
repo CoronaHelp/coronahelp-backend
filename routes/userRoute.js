@@ -59,16 +59,22 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
-router.put("/:id", (req, res) => {
+router.put("/:id", async (req, res) => {
   const id = req.params.id;
 
-  return User.update(id, req.body)
-    .then(updtd => {
-      res.status(201).json({ update: "success", updtd });
-    })
-    .catch(err => {
-      res.status(500).json(err);
-    });
+  try {
+    const user = await User.update(id, req.body);
+    console.log("update user", user);
+    if (user) {
+      res.status(200).json({ update: "success", user });
+    } else {
+      res.status(404).json({ errorMessage: "User with that ID does not exist" });
+    }
+  } catch (err) {
+    res
+      .status(500)
+      .json({ errorMessage: `Server failed to update user by id: ${err}` });
+  }
 });
 
 module.exports = router;

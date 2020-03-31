@@ -3,23 +3,40 @@ const db = require("../data/dbConfig");
 module.exports = {
   getCats,
   create,
-  getCatsById
+  getCatById,
+  update,
+  remove
 };
 
 function getCats() {
   return db("inventoryCategory");
 }
 
+function getCatById(id) {
+  return db("inventoryCategory")
+    .where({ id })
+    .first();
+}
+
 function create(cat) {
   return db("inventoryCategory")
     .insert(cat, "id")
     .then(res => {
-      return getCatsById(res[0]);
+      return getCatById(res[0]);
     });
 }
 
-function getCatsById(id) {
+function update(id, changes) {
   return db("inventoryCategory")
     .where({ id })
-    .first();
+    .update(changes)
+    .then(res => {
+      return getCatById(id);
+    });
+}
+
+function remove(id) {
+  return db("inventoryCategory")
+    .where("id", id)
+    .del();
 }
