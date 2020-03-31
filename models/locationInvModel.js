@@ -5,15 +5,13 @@ module.exports = {
   create,
 };
 
-async function getItemsByLocationId(locationID) {
-  const locationItems = await db("locationInventory")
-    .select("itemID")
-    .where({ locationID });
-  const itemIDs = locationItems.map(item => item.itemID);
+function getItemsByLocationId(locationID) {
   return db("inventoryItems as ii")
-    .select("ii.name", "ic.name as categoryName")
-    .whereIn("ii.id", itemIDs)
-    .join("inventoryCategory as ic", "ic.id", "ii.categoryID");
+    .select("ii.name", "ic.name as categoryName", "a.name as availability")
+    .join("locationInventory as li", "li.itemID", "ii.id")
+    .join("inventoryCategory as ic", "ic.id", "ii.categoryID")
+    .join("availability as a", "a.id", "li.availabilityID")
+    .where("li.locationID", locationID);
 };
 
 async function create(locationInvItem) {
