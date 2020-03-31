@@ -10,7 +10,7 @@ router.get("/id/:id", async (req, res) => {
   try {
     const location = await Location.getLocationById(id);
     if (location) return res.status(200).json(location);
-    return res.status(404).json({ errorMessage: "No location with that ID" });
+    return res.status(404).json({ errorMessage: `No location with id '${ id }'` });
   } catch (e) {
     return res
       .status(500)
@@ -73,7 +73,7 @@ router.delete("/:id", async (req, res) => {
             .json({ errorMessage: `Error deleting location: ${err}` })
         );
     }
-    return res.status(404).json({ errorMessage: "No location with that ID" });
+    return res.status(404).json({ errorMessage: `No location to delete with id '${ id }'` });
   } catch (e) {
     return res
       .status(500)

@@ -1,9 +1,13 @@
-const Location = require("./locationModel");
-const User = require("./userModel");
 const Cat = require("./invCategoryModel");
+const InvItems = require("./invItemsModel");
+const Location = require("./locationModel");
+const LocationInv = require("./locationInvModel");
+const User = require("./userModel");
 
 module.exports = {
-  Location,
-  User,
-  Cat
+	Cat,
+	InvItems,
+	Location,
+	LocationInv,
+	User,
 };
