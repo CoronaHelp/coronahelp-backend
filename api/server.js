@@ -7,7 +7,9 @@ const {
   authRoute,
   locationRoute,
   userRoute,
-  invCatRoute
+  invCatRoute,
+  invItemsRoute,
+  locationInvRoute,
 } = require("../routes/index.js");
 
 const server = express();
@@ -17,9 +19,11 @@ server.use(express.json());
 server.use(cors());
 
 server.use("/api/auth", authRoute);
+server.use("/api/categories", invCatRoute);
+server.use("/api/items", invItemsRoute);
+server.use("/api/location-inventory", locationInvRoute);
 server.use("/api/locations", locationRoute);
 server.use("/api/users", userRoute);
-server.use("/api/categories", invCatRoute);
 
 server.get("/", (req, res) =>
   res.status(200).json({ message: "UP AND RUNNING" })
