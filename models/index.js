@@ -3,6 +3,7 @@ const InvItems = require("./invItemsModel");
 const Location = require("./locationModel");
 const LocationInv = require("./locationInvModel");
 const User = require("./userModel");
+const Request = require("./requestModel");
 
 module.exports = {
 	Cat,
@@ -10,4 +11,5 @@ module.exports = {
 	Location,
 	LocationInv,
 	User,
+	Request
 };
