@@ -100,7 +100,7 @@ exports.up = function(knex) {
         .inTable("inventoryItems")
         .notNullable();
 
-      tbl.boolean("fulfilled");
+      tbl.boolean("fulfilled").notNullable();
 
       tbl
         .integer("fulfilledUserID")

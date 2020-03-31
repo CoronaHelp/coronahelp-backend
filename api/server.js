@@ -10,6 +10,7 @@ const {
   invCatRoute,
   invItemsRoute,
   locationInvRoute,
+  requestRoute
 } = require("../routes/index.js");
 
 const server = express();
@@ -24,6 +25,7 @@ server.use("/api/items", invItemsRoute);
 server.use("/api/location-inventory", locationInvRoute);
 server.use("/api/locations", locationRoute);
 server.use("/api/users", userRoute);
+server.use("/api/requests", requestRoute);
 
 server.get("/", (req, res) =>
   res.status(200).json({ message: "UP AND RUNNING" })
