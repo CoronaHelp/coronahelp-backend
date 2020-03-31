@@ -44,7 +44,7 @@ function update(id, changes) {
   return db("locations")
     .where({ id })
     .update(changes)
-    .then(res => getLocationById(id));
+    .then(() => getLocationById(id));
 };
 
 function remove(id) {

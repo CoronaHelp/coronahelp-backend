@@ -48,7 +48,7 @@ router.delete("/:id", async (req, res) => {
 
     if (location) {
       return Location.remove(id)
-        .then(rmvd => res.status(200).json({ delete: "success", location }))
+        .then(() => res.status(200).json({ delete: "success", location }))
         .catch(err => res.status(500).json({ errorMessage: `Error deleting location: ${ err }` }));
     }
     return res.status(404).json({ errorMessage: "No location with that ID" });
