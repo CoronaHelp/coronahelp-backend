@@ -25,8 +25,6 @@ router.post("/login", (req, res) => {
   return Users.getBy({ username })
     .first()
     .then(user => {
-      // console.log("login users", users);
-      // const user = users[0];
       if (user && bcrypt.compareSync(password, user.password)) {
         const token = generateToken(user);
         delete user.password;

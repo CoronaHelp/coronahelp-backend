@@ -37,7 +37,7 @@ router.get("/:id", async (req, res) => {
 
 router.post("/", restricted, (req, res) => {
   return User.create(req.body)
-    .then(insrtd => res.status(201).json({ created: "success", insrtd }))
+    .then(insrtd => res.status(201).json(insrtd))
     .catch(err =>
       res.status(500).json({ errorMessage: `Error creating user: ${err}` })
     );
@@ -45,12 +45,11 @@ router.post("/", restricted, (req, res) => {
 
 router.delete("/:id", restricted, async (req, res) => {
   const id = req.params.id;
-
   const user = await User.getUserById(id);
 
   if (user) {
     return User.remove(id)
-      .then(rmvd => res.status(200).json({ delete: "success", user }))
+      .then(rmvd => res.status(200).json(user))
       .catch(err =>
         res.status(500).json({ errorMessage: `Error deleting user: ${err}` })
       );
@@ -65,7 +64,7 @@ router.put("/:id", restricted, async (req, res) => {
 
   try {
     const user = await User.update(id, req.body);
-    if (user) return res.status(200).json({ update: "success", user });
+    if (user) return res.status(200).json(user);
     return res
       .status(404)
       .json({ errorMessage: `No user found with id '${id}'` });

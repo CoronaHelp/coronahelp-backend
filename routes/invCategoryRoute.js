@@ -22,7 +22,7 @@ router.get("/", async (req, res) => {
 
 router.post("/", restricted, (req, res) => {
   return Cat.create(req.body)
-    .then(insrtd => res.status(201).json({ created: "success", insrtd }))
+    .then(insrtd => res.status(201).json(insrtd))
     .catch(err =>
       res.status(500).json({ errorMessage: `Error creating user: ${err}` })
     );
@@ -50,7 +50,7 @@ router.put("/:id", restricted, async (req, res) => {
 
   try {
     const cat = await Cat.update(id, req.body);
-    if (cat) return res.status(200).json({ update: "success", cat });
+    if (cat) return res.status(200).json(cat);
     return res
       .status(404)
       .json({ errorMessage: `Category with id '${id}' does not exist` });
@@ -68,7 +68,7 @@ router.delete("/:id", restricted, async (req, res) => {
 
     if (cat) {
       return Cat.remove(id)
-        .then(() => res.status(200).json({ delete: "success", cat }))
+        .then(() => res.status(200).json(cat))
         .catch(err =>
           res
             .status(500)

@@ -23,7 +23,7 @@ router.get("/:id", async (req, res) => {
   const id = req.params.id;
 
   try {
-    const request = await Request.getUserById(id);
+    const request = await Request.getRequestById(id);
 
     if (request) return res.status(200).json(request);
     return res
@@ -36,12 +36,44 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.post("/", (req, res) => {
+router.post("/", restricted, (req, res) => {
   return Request.create(req.body)
     .then(created => res.status(201).json({ created: "success", created }))
     .catch(err =>
       res.status(500).json({ errorMessage: `Error creating request: ${err}` })
     );
+});
+
+router.delete("/:id", restricted, async (req, res) => {
+  const id = req.params.id;
+  const request = await Request.getRequestById(id);
+
+  if (request) {
+    return Request.remove(id)
+      .then(rmvd => res.status(200).json(request))
+      .catch(err =>
+        res.status(500).json({ errorMessage: `Error deleting request: ${err}` })
+      );
+  }
+  return res
+    .status(404)
+    .json({ errorMessage: `No user to delete found with id '${id}'` });
+});
+
+router.put("/:id", restricted, async (req, res) => {
+  const id = req.params.id;
+
+  try {
+    const request = await Request.update(id, req.body);
+    if (request) return res.status(200).json(request);
+    return res
+      .status(404)
+      .json({ errorMessage: `No user request with id '${id}'` });
+  } catch (err) {
+    return res
+      .status(500)
+      .json({ errorMessage: `Server failed to request user by id: ${err}` });
+  }
 });
 
 module.exports = router;

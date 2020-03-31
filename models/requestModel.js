@@ -3,7 +3,9 @@ const db = require("../data/dbConfig");
 module.exports = {
   getRequests,
   getRequestById,
-  create
+  create,
+  update,
+  remove
 };
 
 function getRequests() {
@@ -13,17 +15,6 @@ function getRequests() {
 function getRequestById(id) {
   return db("requests")
     .where({ id })
-    .select([
-      "id",
-      "title",
-      "description",
-      "createdTimestamp",
-      "userID",
-      "itemID",
-      "fulfilled",
-      "fulfilledUserID",
-      "fulfilledTimestamp"
-    ])
     .first();
 }
 
@@ -31,4 +22,17 @@ function create(request) {
   return db("requests")
     .insert(request, "id")
     .then(res => getRequestById(res[0]));
+}
+
+function update(id, changes) {
+  return db("requests")
+    .where({ id })
+    .update(changes)
+    .then(() => getRequestById(id));
+}
+
+function remove(id) {
+  return db("requests")
+    .where("id", id)
+    .del();
 }
