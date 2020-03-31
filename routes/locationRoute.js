@@ -12,7 +12,9 @@ router.get("/id/:id", async (req, res) => {
     if (location) return res.status(200).json(location);
     return res.status(404).json({ errorMessage: "No location with that ID" });
   } catch (e) {
-    return res.status(500).json({ errorMessage: `Error getting location: ${ e }` });
+    return res
+      .status(500)
+      .json({ errorMessage: `Error getting location: ${e}` });
   }
 });
 
@@ -20,24 +22,40 @@ router.get("/radius/:radius/:lat/:lon", async (req, res) => {
   const { radius, lat, lon } = req.params;
 
   const latitude = parseFloat(lat);
-  if (!latitude) return res.status(400).json({ errorMessage: `Latitude '${ lat }' is not a number.` });
+  if (!latitude)
+    return res
+      .status(400)
+      .json({ errorMessage: `Latitude '${lat}' is not a number.` });
 
   const longitude = parseFloat(lon);
-  if (!longitude) return res.status(400).json({ errorMessage: `Longitude '${ lon }' is not a number.` });
+  if (!longitude)
+    return res
+      .status(400)
+      .json({ errorMessage: `Longitude '${lon}' is not a number.` });
 
   try {
-    const locations = await Location.getLocationsByRadius(latitude, longitude, radius);
+    const locations = await Location.getLocationsByRadius(
+      latitude,
+      longitude,
+      radius
+    );
     if (locations.length) return res.status(200).json(locations);
-    return res.status(404).json({ errorMessage: "No locations within that radius found" });
+    return res
+      .status(404)
+      .json({ errorMessage: "No locations within that radius found" });
   } catch (e) {
-    return res.status(500).json({ errorMessage: `Error getting location: ${ e }` });
+    return res
+      .status(500)
+      .json({ errorMessage: `Error getting location: ${e}` });
   }
 });
 
 router.post("/", (req, res) => {
   return Location.create(req.body)
     .then(insrtd => res.status(201).json(insrtd))
-    .catch(err => res.status(500).json({ errorMessage: `Error creating location: ${ err }` }));
+    .catch(err =>
+      res.status(500).json({ errorMessage: `Error creating location: ${err}` })
+    );
 });
 
 router.delete("/:id", async (req, res) => {
@@ -49,11 +67,17 @@ router.delete("/:id", async (req, res) => {
     if (location) {
       return Location.remove(id)
         .then(() => res.status(200).json({ delete: "success", location }))
-        .catch(err => res.status(500).json({ errorMessage: `Error deleting location: ${ err }` }));
+        .catch(err =>
+          res
+            .status(500)
+            .json({ errorMessage: `Error deleting location: ${err}` })
+        );
     }
     return res.status(404).json({ errorMessage: "No location with that ID" });
   } catch (e) {
-    return res.status(500).json({ errorMessage: `Error getting location to delete: ${ err }` });
+    return res
+      .status(500)
+      .json({ errorMessage: `Error getting location to delete: ${err}` });
   }
 });
 
