@@ -10,7 +10,7 @@ router.post("/register", (req, res) => {
   const hash = bcrypt.hashSync(user.password, 13);
   user.password = hash;
 
-  Users.create(user)
+  return Users.create(user)
     .then(created => {
       res.status(201).json(created);
     })
@@ -22,23 +22,25 @@ router.post("/register", (req, res) => {
 router.post("/login", (req, res) => {
   let { username, password } = req.body;
 
-  Users.getBy({ username })
+  return Users.getBy({ username })
     .first()
     .then(user => {
+      // console.log("login users", users);
+      // const user = users[0];
       if (user && bcrypt.compareSync(password, user.password)) {
         const token = generateToken(user);
-        res.status(200).json({
+        delete user.password;
+        return res.status(200).json({
           message: `Welcome ${user.username}!`,
           token,
           user
         });
-      } else {
-        res.status(401).json({ errorMessage: "Invalid credentials" });
       }
+      return res.status(401).json({ errorMessage: "Invalid credentials" });
     })
-    .catch(err => {
-      res.status(500).json({ errorMessage: `Error logging in: ${err}` });
-    });
+    .catch(err =>
+      res.status(500).json({ errorMessage: `Error logging in: ${err}` })
+    );
 });
 
 function generateToken(user) {

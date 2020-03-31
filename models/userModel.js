@@ -22,7 +22,6 @@ function getUserById(id) {
       "firstName",
       "email",
       "username",
-      "password",
       "latitude",
       "longitude",
       "address",
