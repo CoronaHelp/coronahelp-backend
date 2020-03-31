@@ -3,6 +3,7 @@ const express = require("express");
 const { Cat } = require("../models/index");
 
 const router = express.Router();
+const restricted = require("../middleware/authenticateMiddleware");
 
 router.get("/", async (req, res) => {
   try {
@@ -19,7 +20,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.post("/", (req, res) => {
+router.post("/", restricted, (req, res) => {
   return Cat.create(req.body)
     .then(insrtd => res.status(201).json({ created: "success", insrtd }))
     .catch(err =>
@@ -44,7 +45,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", restricted, async (req, res) => {
   const id = req.params.id;
 
   try {
@@ -60,7 +61,7 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", restricted, async (req, res) => {
   const id = req.params.id;
   try {
     const cat = await Cat.getCatById(id);

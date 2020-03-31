@@ -4,6 +4,8 @@ const { User } = require("../models/index");
 
 const router = express.Router();
 
+const restricted = require("../middleware/authenticateMiddleware");
+
 router.get("/", async (req, res) => {
   try {
     const users = await User.getUsers();
@@ -33,7 +35,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.post("/", (req, res) => {
+router.post("/", restricted, (req, res) => {
   return User.create(req.body)
     .then(insrtd => res.status(201).json({ created: "success", insrtd }))
     .catch(err =>
@@ -41,7 +43,7 @@ router.post("/", (req, res) => {
     );
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", restricted, async (req, res) => {
   const id = req.params.id;
 
   const user = await User.getUserById(id);
@@ -58,7 +60,7 @@ router.delete("/:id", async (req, res) => {
     .json({ errorMessage: `No user to delete found with id '${id}'` });
 });
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", restricted, async (req, res) => {
   const id = req.params.id;
 
   try {
