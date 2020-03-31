@@ -82,6 +82,10 @@ exports.up = function(knex) {
     .createTable("requests", tbl => {
       tbl.increments();
 
+      tbl.string("title", 50).notNullable();
+
+      tbl.string("description");
+
       tbl.datetime("createdTimestamp").notNullable();
 
       tbl
