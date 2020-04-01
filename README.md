@@ -56,7 +56,7 @@ https://supplyhelper-be-staging.herokuapp.com/
 ### Requests
 | Method | Endpoints                     | Description            |
 | ------ | ----------------------------- | ---------------------- |
-| GET    | /api/requests/all/:zipCode/:radius | Get all requests within zip-code radius    |
+| GET    | /api/requests/all/:zipCode/:radius | Get all requests within a given radius from a given zip-code |
 | POST   | /api/requests                 | Post an request        |  
 | GET    | /api/requests/id/:id          | Get request by id      |  
 | PUT    | /api/requests/:id             | Update request by id   |  
