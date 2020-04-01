@@ -24,7 +24,7 @@ function getUserById(id) {
       "username",
       "latitude",
       "longitude",
-      "address",
+      "zipcode",
       "prefRadius"
     ])
     .first();

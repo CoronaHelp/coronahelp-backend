@@ -86,7 +86,10 @@ exports.up = function(knex) {
 
       tbl.string("description");
 
-      tbl.datetime("createdTimestamp").notNullable();
+      tbl
+        .datetime("createdTimestamp")
+        .defaultTo(knex.fn.now())
+        .notNullable();
 
       tbl
         .integer("userID")
@@ -100,7 +103,10 @@ exports.up = function(knex) {
         .inTable("inventoryItems")
         .notNullable();
 
-      tbl.boolean("fulfilled").notNullable();
+      tbl
+        .boolean("fulfilled")
+        .notNullable()
+        .defaultTo(0);
 
       tbl
         .integer("fulfilledUserID")
