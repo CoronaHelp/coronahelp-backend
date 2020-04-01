@@ -47,8 +47,7 @@ https://supplyhelper-be-staging.herokuapp.com/
 ### Locations
 | Method | Endpoints                     | Description            |
 | ------ | ----------------------------- | ---------------------- |
-| GET    | /api/locations/radius/:radius/:lat/:lon                |
-|        | Get all locations in given radius                      |
+| GET    | /api/locations/radius/:radius/:lat/:lon | Get all locations in given radius  |
 | POST   | /api/locations                | Post a location        |  
 | GET    | /api/locations/id/:id         | Get location by id     |  
 | PUT    | /api/locations/:id            | Update location by id  |  
