@@ -20,11 +20,11 @@ server.use(express.json());
 server.use(cors());
 
 server.use("/api/auth", authRoute);
+server.use("/api/users", userRoute);
 server.use("/api/categories", invCatRoute);
 server.use("/api/items", invItemsRoute);
 server.use("/api/location-inventory", locationInvRoute);
 server.use("/api/locations", locationRoute);
-server.use("/api/users", userRoute);
 server.use("/api/requests", requestRoute);
 
 server.get("/", (req, res) =>
