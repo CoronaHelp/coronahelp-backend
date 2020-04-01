@@ -3,6 +3,7 @@ const express = require("express");
 const { Cat } = require("../models/index");
 
 const router = express.Router();
+const restricted = require("../middleware/authenticateMiddleware");
 
 router.get("/", async (req, res) => {
   try {
@@ -19,9 +20,9 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.post("/", (req, res) => {
+router.post("/", restricted, (req, res) => {
   return Cat.create(req.body)
-    .then(insrtd => res.status(201).json({ created: "success", insrtd }))
+    .then(insrtd => res.status(201).json(insrtd))
     .catch(err =>
       res.status(500).json({ errorMessage: `Error creating user: ${err}` })
     );
@@ -44,12 +45,12 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", restricted, async (req, res) => {
   const id = req.params.id;
 
   try {
     const cat = await Cat.update(id, req.body);
-    if (cat) return res.status(200).json({ update: "success", cat });
+    if (cat) return res.status(200).json(cat);
     return res
       .status(404)
       .json({ errorMessage: `Category with id '${id}' does not exist` });
@@ -60,14 +61,14 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", restricted, async (req, res) => {
   const id = req.params.id;
   try {
     const cat = await Cat.getCatById(id);
 
     if (cat) {
       return Cat.remove(id)
-        .then(() => res.status(200).json({ delete: "success", cat }))
+        .then(() => res.status(200).json(cat))
         .catch(err =>
           res
             .status(500)

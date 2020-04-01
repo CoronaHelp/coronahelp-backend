@@ -6,7 +6,7 @@ const {
 
 const router = express.Router();
 
-router.get("/items/:id", async (req, res) => {
+router.get("/:id", async (req, res) => {
   const id = req.params.id;
 
   try {
@@ -16,6 +16,12 @@ router.get("/items/:id", async (req, res) => {
   } catch (e) {
     return res.status(500).json({ errorMessage: `Error getting items at location: ${ e }` });
   }
+});
+
+router.post("/", (req, res) => {
+  return LocationInv.create(req.body)
+    .then(insrtd => res.status(201).json(insrtd))
+    .catch(err => res.status(500).json({ errorMessage: `Error adding item to location: ${ err }` }));
 });
 
 module.exports = router;

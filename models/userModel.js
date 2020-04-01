@@ -5,7 +5,8 @@ module.exports = {
   getUserById,
   create,
   update,
-  remove
+  remove,
+  getBy
 };
 
 function getUsers() {
@@ -27,6 +28,10 @@ function getUserById(id) {
       "prefRadius"
     ])
     .first();
+}
+
+function getBy(filter) {
+  return db("users").where(filter);
 }
 
 function create(user) {
