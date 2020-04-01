@@ -86,8 +86,6 @@ exports.up = function(knex) {
 
       tbl.string("description");
 
-      tbl.integer("zipCode", 5).notNullable();
-
       tbl.datetime("createdTimestamp").notNullable();
 
       tbl
