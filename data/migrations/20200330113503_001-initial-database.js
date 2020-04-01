@@ -18,7 +18,7 @@ exports.up = function(knex) {
 
       tbl.float("longitude");
 
-      tbl.string("address");
+      tbl.integer("zipcode");
 
       tbl.string("password").notNullable();
 
@@ -86,7 +86,7 @@ exports.up = function(knex) {
 
       tbl.string("description");
 
-      tbl.integer("zipCode", 5).notNullable();
+      tbl.integer("zipcode", 5).notNullable();
 
       tbl.datetime("createdTimestamp").notNullable();
 
