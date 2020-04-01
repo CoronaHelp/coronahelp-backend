@@ -5,10 +5,25 @@ const { Request } = require("../models/index");
 const router = express.Router();
 
 const restricted = require("../middleware/authenticateMiddleware");
+const getLatLonFromZipCode = require("../middleware/getLatLonFromZipCode");
 
-router.get("/", async (req, res) => {
+router.get("/all/:zipCode/:radius", getLatLonFromZipCode, async (req, res) => {
+  const { lat, lon } = req;
+  const { radius } = req.params;
+  const latitude = parseFloat(lat);
+  if (!latitude)
+    return res
+      .status(400)
+      .json({ errorMessage: `Latitude '${lat}' is not a number.` });
+
+  const longitude = parseFloat(lon);
+  if (!longitude)
+    return res
+      .status(400)
+      .json({ errorMessage: `Longitude '${lon}' is not a number.` });
+
   try {
-    const reqs = await Request.getRequests();
+    const reqs = await Request.getRequests(latitude, longitude, radius);
 
     if (reqs) return res.status(200).json(reqs);
     return res.status(404).json({ errorMessage: "No requests to retrieve" });
@@ -19,7 +34,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/:id", async (req, res) => {
+router.get("/id/:id", async (req, res) => {
   const id = req.params.id;
 
   try {

@@ -8,8 +8,24 @@ module.exports = {
   remove
 };
 
-function getRequests() {
-  return db("requests");
+function getRequests(lat, lon, radius) {
+  // 0.08 === 5 miles
+  const extent = (radius * 0.08) / 5;
+  const lowerLatLimit = lat - extent;
+  const upperLatLimit = lat + extent;
+  const lowerLonLimit = lon - extent;
+  const upperLonLimit = lon + extent;
+
+  return db("requests as r")
+    .select("r.id", "r.title", "r.description", "u.username", "r.createdTimestamp", "ii.name as item", "ic.name as category")
+    .join("users as u", "u.id", "r.userID")
+    .join("inventoryItems as ii", "ii.id", "r.itemID")
+    .join("inventoryCategory as ic", "ic.id", "ii.categoryID")
+    .where("u.latitude", ">", lowerLatLimit)
+    .andWhere("u.latitude", "<", upperLatLimit)
+    .andWhere("u.longitude", ">", lowerLonLimit)
+    .andWhere("u.longitude", "<", upperLonLimit)
+    .andWhere("r.fulfilled", false);
 }
 
 function getRequestById(id) {
