@@ -51,6 +51,7 @@ exports.up = function(knex) {
       tbl
         .integer("categoryID")
         .references("id")
+        .onDelete("CASCADE") // when category is deleted, item in that category is also deleted
         .inTable("inventoryCategory");
     })
 
@@ -66,16 +67,20 @@ exports.up = function(knex) {
       tbl
         .integer("locationID")
         .references("id")
+        .onDelete("CASCADE") // when location is deleted all its inventory is also deleted
         .inTable("locations");
 
       tbl
         .integer("itemID")
         .references("id")
+        .onDelete("CASCADE") // when item is deleted, it is also deleted from any location inventory
         .inTable("inventoryItems");
 
       tbl
         .integer("availabilityID")
         .references("id")
+        // when availability is deleted(side note: it won't ever be deleted), delete the location inventory
+        .onDelete("CASCADE")
         .inTable("availability");
     })
 
@@ -92,11 +97,13 @@ exports.up = function(knex) {
         .integer("userID")
         .references("id")
         .inTable("users")
+        .onDelete("CASCADE") // when user that made the request is deleted, the request is also deleted
         .notNullable();
 
       tbl
         .integer("itemID")
         .references("id")
+        .onDelete("CASCADE") // when item is deleted, any requests for that item are also deleted
         .inTable("inventoryItems")
         .notNullable();
 
@@ -105,6 +112,7 @@ exports.up = function(knex) {
       tbl
         .integer("fulfilledUserID")
         .references("id")
+        .onDelete("SET NULL") // when user who fulfilled request is deleted, leave the request up
         .inTable("users");
 
       tbl.datetime("fulfilledTimestamp");
