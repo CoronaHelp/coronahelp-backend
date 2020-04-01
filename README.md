@@ -12,6 +12,7 @@ https://supplyhelper-be-staging.herokuapp.com/
 | POST   | /api/auth/login               | Login                  |
 
 ### Users
+| Method | Endpoints                     | Description            |
 | ------ | ----------------------------- | ---------------------- |
 | GET    | /api/users                    | Get all users          |
 | POST   | /api/users                    | Create user            |  
@@ -20,6 +21,7 @@ https://supplyhelper-be-staging.herokuapp.com/
 | DEL    | /api/users/:id                | Delete user by id      |  
 
 ### Inventory Categories
+| Method | Endpoints                     | Description            |
 | ------ | ----------------------------- | ---------------------- | 
 | GET    | /api/categories               | Get all categories     |  
 | POST   | /api/categories               | Post category          |  
@@ -28,6 +30,7 @@ https://supplyhelper-be-staging.herokuapp.com/
 | DEL    | /api/categories/:id           | Delete cat by id       |  
 
 ### Inventory Items
+| Method | Endpoints                     | Description            |
 | ------ | ----------------------------- | ---------------------- |
 | GET    | /api/items                    | Get all items          |
 | POST   | /api/items                    | Post an item           |  
@@ -36,11 +39,13 @@ https://supplyhelper-be-staging.herokuapp.com/
 | DEL    | /api/items/:id                | Delete item by id      |
 
 ### Location Inventory
+| Method | Endpoints                     | Description            |
 | ------ | ----------------------------- | ---------------------- |
 | GET    | /api/location-inventory/:id   | Get location inv by id |  
 | POST   | /api/location-inventory       | Post location inv      |  
 
 ### Locations
+| Method | Endpoints                     | Description            |
 | ------ | ----------------------------- | ---------------------- |
 | GET    | /api/locations/radius/:radius/:lat/:lon                |
 |        | Get all locations in given radius                      |
@@ -50,6 +55,7 @@ https://supplyhelper-be-staging.herokuapp.com/
 | DEL    | /api/locations/:id            | Delete location by id  |
 
 ### Requests
+| Method | Endpoints                     | Description            |
 | ------ | ----------------------------- | ---------------------- |
 | GET    | /api/requests                 | Get all requests       |
 | POST   | /api/requests                 | Post an request        |  
