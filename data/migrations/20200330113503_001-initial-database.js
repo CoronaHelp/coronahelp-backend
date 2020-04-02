@@ -50,9 +50,9 @@ exports.up = function(knex) {
 
       tbl
         .integer("categoryID")
-        .references("id")
-        .onDelete("CASCADE") // when category is deleted, item in that category is also deleted
-        .inTable("inventoryCategory");
+        .unsigned()
+        .references("inventoryCategory.id")
+        .onDelete("CASCADE"); // when category is deleted, item in that category is also deleted
     })
 
     .createTable("availability", tbl => {
@@ -66,22 +66,23 @@ exports.up = function(knex) {
 
       tbl
         .integer("locationID")
-        .references("id")
-        .onDelete("CASCADE") // when location is deleted all its inventory is also deleted
-        .inTable("locations");
+        .unsigned()
+        .notNullable()
+        .references("locations.id")
+        .onDelete("CASCADE"); // when location is deleted all its inventory is also deleted
 
       tbl
         .integer("itemID")
-        .references("id")
-        .onDelete("CASCADE") // when item is deleted, it is also deleted from any location inventory
-        .inTable("inventoryItems");
+        .unsigned()
+        .references("inventoryItems.id")
+        .onDelete("CASCADE"); // when item is deleted, it is also deleted from any location inventory
 
       tbl
         .integer("availabilityID")
-        .references("id")
+        .unsigned()
+        .references("availability.id")
         // when availability is deleted(side note: it won't ever be deleted), delete the location inventory
-        .onDelete("CASCADE")
-        .inTable("availability");
+        .onDelete("CASCADE");
     })
 
     .createTable("requests", tbl => {
@@ -91,29 +92,32 @@ exports.up = function(knex) {
 
       tbl.string("description");
 
-      tbl.datetime("createdTimestamp").notNullable();
+      tbl
+        .datetime("createdTimestamp")
+        .defaultTo(knex.fn.now())
+        .notNullable();
 
       tbl
         .integer("userID")
-        .references("id")
-        .inTable("users")
-        .onDelete("CASCADE") // when user that made the request is deleted, the request is also deleted
-        .notNullable();
+        .notNullable()
+        .references("users.id")
+        .onDelete("CASCADE"); // when user that made the request is deleted, the request is also deleted
 
       tbl
         .integer("itemID")
-        .references("id")
-        .onDelete("CASCADE") // when item is deleted, any requests for that item are also deleted
-        .inTable("inventoryItems")
-        .notNullable();
+        .notNullable()
+        .references("inventoryItems.id")
+        .onDelete("CASCADE"); // when item is deleted, any requests for that item are also deleted
 
-      tbl.boolean("fulfilled").notNullable();
+      tbl
+        .boolean("fulfilled")
+        .notNullable()
+        .defaultTo(0);
 
       tbl
         .integer("fulfilledUserID")
-        .references("id")
-        .onDelete("SET NULL") // when user who fulfilled request is deleted, leave the request up
-        .inTable("users");
+        .references("users.id")
+        .onDelete("SET NULL"); // when user who fulfilled request is deleted, leave the request up
 
       tbl.datetime("fulfilledTimestamp");
     });

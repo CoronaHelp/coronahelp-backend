@@ -15,7 +15,6 @@ https://supplyhelper-be-staging.herokuapp.com/
 | Method | Endpoints                     | Description            |
 | ------ | ----------------------------- | ---------------------- |
 | GET    | /api/users                    | Get all users          |
-| POST   | /api/users                    | Create user            |  
 | GET    | /api/users/:id                | Get user by id         |
 | PUT    | /api/users/:id                | Update a user          |
 | DEL    | /api/users/:id                | Delete user by id      |  
