@@ -10,7 +10,10 @@ router.get("/", async (req, res) => {
   try {
     const users = await User.getUsers();
 
-    if (users) return res.status(200).json(users);
+    if (users) {
+      users.forEach(user => delete user.password);
+      return res.status(200).json(users);
+    }
     return res.status(404).json({ errorMessage: "No users to retrieve" });
   } catch (e) {
     return res
@@ -61,10 +64,14 @@ router.delete("/:id", restricted, async (req, res) => {
 
 router.put("/:id", restricted, async (req, res) => {
   const id = req.params.id;
+  const updated = req.body;
+
+  if (updated.password) delete updated.password;
 
   try {
-    const user = await User.update(id, req.body);
+    const user = await User.update(id, updated);
     if (user) return res.status(200).json(user);
+
     return res
       .status(404)
       .json({ errorMessage: `No user found with id '${id}'` });
