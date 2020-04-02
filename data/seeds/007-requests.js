@@ -8,6 +8,7 @@ exports.seed = function(knex) {
         {
           id: 1,
           title: 'request #1',
+          description: 'This is test request number one.',
           createdTimestamp: knex.fn.now(),
           userID: 1,
           itemID: 1,
@@ -24,6 +25,7 @@ exports.seed = function(knex) {
         {
           id: 3,
           title: 'request #3',
+          description: 'This is test request number three.',
           createdTimestamp: knex.fn.now(),
           userID: 2,
           itemID: 3,
