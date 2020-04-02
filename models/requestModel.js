@@ -9,6 +9,8 @@ module.exports = {
 };
 
 function getRequests(lat, lon, radius) {
+  console.log("req lat", lat);
+  console.log("req lon", lon);
   // 0.08 === 5 miles
   const extent = (radius * 0.08) / 5;
   const lowerLatLimit = lat - extent;
@@ -17,7 +19,15 @@ function getRequests(lat, lon, radius) {
   const upperLonLimit = lon + extent;
 
   return db("requests as r")
-    .select("r.id", "r.title", "r.description", "u.username", "r.createdTimestamp", "ii.name as item", "ic.name as category")
+    .select(
+      "r.id",
+      "r.title",
+      "r.description",
+      "u.username",
+      "r.createdTimestamp",
+      "ii.name as item",
+      "ic.name as category"
+    )
     .join("users as u", "u.id", "r.userID")
     .join("inventoryItems as ii", "ii.id", "r.itemID")
     .join("inventoryCategory as ic", "ic.id", "ii.categoryID")
