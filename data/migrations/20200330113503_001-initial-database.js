@@ -51,7 +51,8 @@ exports.up = function(knex) {
       tbl
         .integer("categoryID")
         .unsigned()
-        .references("inventoryCategory.id")
+        .references("id")
+        .inTable("inventoryCategory")
         .onDelete("CASCADE"); // when category is deleted, item in that category is also deleted
     })
 
@@ -68,19 +69,22 @@ exports.up = function(knex) {
         .integer("locationID")
         .unsigned()
         .notNullable()
-        .references("locations.id")
+        .references("id")
+        .inTable("locations")
         .onDelete("CASCADE"); // when location is deleted all its inventory is also deleted
 
       tbl
         .integer("itemID")
         .unsigned()
-        .references("inventoryItems.id")
+        .references("id")
+        .inTable("inventoryItems")
         .onDelete("CASCADE"); // when item is deleted, it is also deleted from any location inventory
 
       tbl
         .integer("availabilityID")
         .unsigned()
-        .references("availability.id")
+        .references("id")
+        .inTable("availability")
         // when availability is deleted(side note: it won't ever be deleted), delete the location inventory
         .onDelete("CASCADE");
     })
@@ -100,13 +104,15 @@ exports.up = function(knex) {
       tbl
         .integer("userID")
         .notNullable()
-        .references("users.id")
+        .references("id")
+        .inTable("users")
         .onDelete("CASCADE"); // when user that made the request is deleted, the request is also deleted
 
       tbl
         .integer("itemID")
         .notNullable()
-        .references("inventoryItems.id")
+        .references("id")
+        .inTable("inventoryItems")
         .onDelete("CASCADE"); // when item is deleted, any requests for that item are also deleted
 
       tbl
@@ -116,7 +122,8 @@ exports.up = function(knex) {
 
       tbl
         .integer("fulfilledUserID")
-        .references("users.id")
+        .references("id")
+        .inTable("users")
         .onDelete("SET NULL"); // when user who fulfilled request is deleted, leave the request up
 
       tbl.datetime("fulfilledTimestamp");
