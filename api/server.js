@@ -21,20 +21,21 @@ const enableCors = function(req, res, next) {
     next();
 };
 
-const corsOptions = {
-	origin: function (origin, callback) {
-		if (origin === process.env.FRONTEND_URL || !origin) return callback(null, true);
-		return callback(new Error('Not allowed by CORS'));
-	},
-	optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-}
+// const corsOptions = {
+// 	origin: function (origin, callback) {
+// 		if (origin === process.env.FRONTEND_URL || !origin) return callback(null, true);
+// 		return callback(new Error('Not allowed by CORS'));
+// 	},
+// 	optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+// }
 
 const server = express();
 
 server.use(
   express.json(),
   enableCors,
-  cors(corsOptions),
+  // cors(corsOptions),
+  cors(),
   helmet(),
   morgan('short'),
 );
