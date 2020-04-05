@@ -11,8 +11,8 @@ exports.seed = function(knex) {
           firstName: "Firstington",
           email: "email@aol.com",
           username: "Mr.User",
-          latitude: -118.4105,
-          longitude: 34.103,
+          latitude: -118.39673499999998,
+          longitude: 34.07236500000005,
           zipcode: 90210,
           password: "password123",
           prefRadius: 2
