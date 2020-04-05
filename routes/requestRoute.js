@@ -24,7 +24,6 @@ router.get("/all/:zipCode/:radius", getLatLonFromZipCode, async (req, res) => {
 
   try {
     const reqs = await Request.getRequests(latitude, longitude, radius);
-
     if (reqs) return res.status(200).json(reqs);
     return res.status(404).json({ errorMessage: "No requests to retrieve" });
   } catch (e) {

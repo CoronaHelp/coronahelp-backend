@@ -5,6 +5,7 @@ const { User } = require("../models/index");
 const router = express.Router();
 
 const restricted = require("../middleware/authenticateMiddleware");
+const getLatLonFromZipCode = require("../middleware/getLatLonFromZipCode");
 
 router.get("/", async (req, res) => {
   try {
@@ -38,7 +39,10 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.post("/", restricted, (req, res) => {
+router.post("/", restricted, getLatLonFromZipCode, (req, res) => {
+  user.latitude = req.lat;
+  user.longitude = req.lon;
+
   return User.create(req.body)
     .then(insrtd => res.status(201).json(insrtd))
     .catch(err =>

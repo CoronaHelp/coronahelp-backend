@@ -3,12 +3,15 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const Users = require("../models/userModel");
+const getLatLonFromZipCode = require("../middleware/getLatLonFromZipCode");
 const { jwtSecret } = require("../config/jwtSecret");
 
-router.post("/register", (req, res) => {
+router.post("/register", getLatLonFromZipCode, (req, res) => {
   let user = req.body;
   const hash = bcrypt.hashSync(user.password, 13);
   user.password = hash;
+  user.latitude = req.lat;
+  user.longitude = req.lon;
 
   return Users.create(user)
     .then(created => {

@@ -9,10 +9,8 @@ module.exports = {
 };
 
 function getRequests(lat, lon, radius) {
-  // console.log("req lat", lat);
-  // console.log("req lon", lon);
   // 0.08 === 5 miles
-  const extent = (radius * 0.08) / 5;
+  const extent = (radius * 0.24) / 5;
   const lowerLatLimit = lat - extent;
   const upperLatLimit = lat + extent;
   const lowerLonLimit = lon - extent;
