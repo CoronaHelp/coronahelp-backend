@@ -33,7 +33,8 @@ function getRequests(lat, lon, radius) {
     .andWhere("u.latitude", "<", upperLatLimit)
     .andWhere("u.longitude", ">", lowerLonLimit)
     .andWhere("u.longitude", "<", upperLonLimit)
-    .andWhere("r.fulfilled", false);
+    .andWhere("r.fulfilled", false)
+    .orderBy("r.id", "desc");
 }
 
 function getRequestById(id) {
