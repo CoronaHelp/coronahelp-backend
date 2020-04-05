@@ -69,8 +69,8 @@ router.delete("/:id", restricted, async (req, res) => {
 router.put("/:id", restricted, getLatLonFromZipCode, async (req, res) => {
   const id = req.params.id;
   let updated = req.body;
-  updated.latitude = req.lat;
-  updated.longitude = req.lon;
+  if (req.lat) updated.latitude = req.lat;
+  if (req.lon) updated.longitude = req.lon;
 
   if (updated.password) delete updated.password;
 
