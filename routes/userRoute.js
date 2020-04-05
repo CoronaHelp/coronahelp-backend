@@ -66,9 +66,11 @@ router.delete("/:id", restricted, async (req, res) => {
     .json({ errorMessage: `No user to delete found with id '${id}'` });
 });
 
-router.put("/:id", restricted, async (req, res) => {
+router.put("/:id", restricted, getLatLonFromZipCode, async (req, res) => {
   const id = req.params.id;
-  const updated = req.body;
+  let updated = req.body;
+  updated.latitude = req.lat;
+  updated.longitude = req.lon;
 
   if (updated.password) delete updated.password;
 
