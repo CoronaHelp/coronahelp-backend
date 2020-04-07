@@ -23,8 +23,10 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/:id", async (req, res) => {
-  const id = req.params.id;
+// this is a restricted route to be used to return user info during automatic logins
+// like when a user refreshes the page
+router.get("/user-info", restricted, async (req, res) => {
+  const id = req.decodedToken.userId;
 
   try {
     const user = await User.getUserById(id);
